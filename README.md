@@ -1,6 +1,6 @@
 # XstreamMetaspaceLeak
 
-Demonstration project for reporting a case where Xstream seems to cause a JVM metaspace leak (based off https://github.com/mattsheppard/JacksonDatabindMetaspaceLeak)
+Demonstration project for reporting a case where Xstream seems to cause a JVM metaspace leak
 
 Try running it with...
 
@@ -9,6 +9,10 @@ Try running it with...
 > java -XX:MaxMetaspaceSize=100m -cp "target/dependency/*:target/xstream-classloader-leaker-0.0.1-SNAPSHOT.jar" com.kstruct.LeakMetaspaceViaXstream
 ```
 
-On my machine it runs happily for a few minutes, then fails.
+On my machine it runs happily for a few minutes, then fails when it hits the metaspace limit.
 
-I'll add a link once I've cleaned this up, explored a bit and (if I'm not doing somehting wrong, reported it).
+If I set -DclearReflectionFieldDictionary=true to enable my hack to flush
+the cache in PureJavaReflectionProvider.fieldDictionary it seems to run
+indefinitely.
+
+Raised as https://github.com/x-stream/xstream/issues/107
