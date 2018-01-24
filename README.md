@@ -11,8 +11,13 @@ Try running it with...
 
 On my machine it runs happily for a few minutes, then fails when it hits the metaspace limit.
 
-If I set -DclearReflectionFieldDictionary=true to enable my hack to flush
-the cache in PureJavaReflectionProvider.fieldDictionary it seems to run
-indefinitely.
+If I set...
+
+- `-DclearReflectionFieldDictionary=true` to enable my hack to flush
+  the cache in PureJavaReflectionProvider.fieldDictionary
+- `-DclearAnnotatedTypes=true` to enable my hack to clear the set of
+  types stored by AnnotationMapper.annotatedTypes
+
+...then it seems to run indefinitely.
 
 Raised as https://github.com/x-stream/xstream/issues/107
