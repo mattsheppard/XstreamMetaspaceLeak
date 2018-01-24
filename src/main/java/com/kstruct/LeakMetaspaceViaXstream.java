@@ -47,7 +47,7 @@ public class LeakMetaspaceViaXstream {
             
             if (Boolean.getBoolean("clearReflectionFieldDictionary")) {
                 SunUnsafeReflectionProvider reflectionProvider = (SunUnsafeReflectionProvider) xstream.getReflectionProvider();
-                Field fieldDictionaryField = PureJavaReflectionProvider.class.getField("fieldDictionary");
+                Field fieldDictionaryField = PureJavaReflectionProvider.class.getDeclaredField("fieldDictionary");
                 fieldDictionaryField.setAccessible(true);
                 FieldDictionary fieldDictionary = (FieldDictionary) fieldDictionaryField.get(reflectionProvider);
                 fieldDictionary.flushCache();
