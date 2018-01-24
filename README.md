@@ -6,7 +6,7 @@ Try running it with...
 
 ```
 > mvn clean dependency:copy-dependencies package
-> java -XX:MaxMetaspaceSize=100m -cp "target/dependency/*:target/jackson-classloader-leaker-0.0.1-SNAPSHOT.jar" com.kstruct.LeakMetaspaceViaXstream
+> java -XX:MaxMetaspaceSize=100m -cp "target/dependency/*:target/xstream-classloader-leaker-0.0.1-SNAPSHOT.jar" com.kstruct.LeakMetaspaceViaXstream
 ```
 
 On my machine it runs happily for a few minutes, then fails.

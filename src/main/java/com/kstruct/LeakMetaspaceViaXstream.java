@@ -2,9 +2,13 @@ package com.kstruct;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
+import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
+import com.thoughtworks.xstream.converters.reflection.SunUnsafeReflectionProvider;
 
 import groovy.util.GroovyScriptEngine;
 
@@ -39,6 +43,14 @@ public class LeakMetaspaceViaXstream {
                 
                 String xml = xstream.toXML(groovyObject);
                 System.out.println(xml);
+            }
+            
+            if (Boolean.getBoolean("clearReflectionFieldDictionary")) {
+                SunUnsafeReflectionProvider reflectionProvider = (SunUnsafeReflectionProvider) xstream.getReflectionProvider();
+                Field fieldDictionaryField = PureJavaReflectionProvider.class.getField("fieldDictionary");
+                fieldDictionaryField.setAccessible(true);
+                FieldDictionary fieldDictionary = (FieldDictionary) fieldDictionaryField.get(reflectionProvider);
+                fieldDictionary.flushCache();
             }
         }
     }
